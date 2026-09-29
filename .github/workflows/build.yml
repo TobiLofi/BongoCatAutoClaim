@@ -1,0 +1,22 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.423
+      - name: Restore
+        run: dotnet restore BongoCatAutoClaim.sln --locked-mode
+      - name: Build
+        run: dotnet build BongoCatAutoClaim.sln -c Release --no-restore
+      - name: Public-source checks
+        run: dotnet run --project tests/BongoCatAutoClaim.Tests -c Release --no-build
+      - name: Publish portable app
+        run: dotnet publish src/BongoCatAutoClaim.App -c Release --no-build -r win-x64 --self-contained true -p:PublishSingleFile=true -o artifacts/win-x64

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <AssemblyName>BongoCatAutoClaim.Core</AssemblyName>
+    <RootNamespace>BongoCatAutoClaim.Core</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Mono.Cecil" Version="0.11.4" />
+    <EmbeddedResource Include="..\..\compatibility\*.json" Link="Compatibility\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

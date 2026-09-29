@@ -1,0 +1,11 @@
+{
+  "steamAppId": "3419430",
+  "steamBuildId": "25562987",
+  "displayName": "Steam build 25562987",
+  "originalSha256": "BA56E528A5B4B5AF997960E623A90ED0A2A9201ECADE50FA5B6B8B352FDCD953",
+  "acceptedPatchedSha256": "3670F83F99C7E5CFB8906EFD6C3EB8E615D530609C96694CFAE29ACF0DF7CBA2",
+  "moduleMvid": "c1c9f131-084d-4815-a0f1-e4f880601e93",
+  "patchDefinition": "shop-timer-ready-buy-v1",
+  "stockRefreshSeconds": 1800,
+  "runtimeAcceptance": "Three natural dual-chest claim cycles completed successfully on 2026-09-28."
+}

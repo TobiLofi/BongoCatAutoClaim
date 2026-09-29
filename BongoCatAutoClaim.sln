@@ -1,0 +1,31 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BongoCatAutoClaim.Core", "src\BongoCatAutoClaim.Core\BongoCatAutoClaim.Core.csproj", "{8DA930A9-125D-4F08-A2A9-A2EFB72A8C1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BongoCatAutoClaim.App", "src\BongoCatAutoClaim.App\BongoCatAutoClaim.App.csproj", "{1792E18E-3FAB-4938-810B-78C7D7957CB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BongoCatAutoClaim.Tests", "tests\BongoCatAutoClaim.Tests\BongoCatAutoClaim.Tests.csproj", "{F9B46B76-5769-41D8-A894-8D21176196CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DA930A9-125D-4F08-A2A9-A2EFB72A8C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DA930A9-125D-4F08-A2A9-A2EFB72A8C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DA930A9-125D-4F08-A2A9-A2EFB72A8C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DA930A9-125D-4F08-A2A9-A2EFB72A8C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1792E18E-3FAB-4938-810B-78C7D7957CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1792E18E-3FAB-4938-810B-78C7D7957CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1792E18E-3FAB-4938-810B-78C7D7957CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1792E18E-3FAB-4938-810B-78C7D7957CB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B46B76-5769-41D8-A894-8D21176196CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B46B76-5769-41D8-A894-8D21176196CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B46B76-5769-41D8-A894-8D21176196CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B46B76-5769-41D8-A894-8D21176196CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

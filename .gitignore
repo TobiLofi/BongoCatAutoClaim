@@ -1,0 +1,42 @@
+# Build output
+**/bin/
+**/obj/
+artifacts/
+publish/
+release/
+staging/
+*.nupkg
+*.snupkg
+
+# IDE and user state
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local diagnostics and application state
+Logs/
+Backups/
+*.log
+*.tmp
+*.bak
+*.backup
+
+# Never publish Bongo Cat or Steam content
+Assembly-CSharp.dll
+Assembly-CSharp.pdb
+*.original.dll
+*.patched.dll
+*.autoclaim*.dll
+BongoCat.exe
+BongoCat_Data/
+steam_appid.txt
+appmanifest_*.acf
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store

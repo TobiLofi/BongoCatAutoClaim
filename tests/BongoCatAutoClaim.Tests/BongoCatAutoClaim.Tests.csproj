@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <AssemblyName>BongoCatAutoClaim.Tests</AssemblyName>
+    <RootNamespace>BongoCatAutoClaim.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BongoCatAutoClaim.Core\BongoCatAutoClaim.Core.csproj" />
+  </ItemGroup>
+</Project>
