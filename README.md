@@ -89,6 +89,23 @@ heuristic antivirus warnings. Treat any warning seriously: verify the download,
 scan it with tools you trust, inspect the source, or build the program yourself.
 An alert should be investigated rather than automatically dismissed.
 
+### Security / VirusTotal
+
+The exact v1.0.0 executable was submitted to VirusTotal. At the time of the
+initial scan, 2 of 69 security vendors flagged the unsigned executable, while
+the remaining vendors reported it as undetected.
+
+[View the VirusTotal result](https://www.virustotal.com/gui/file/02d4cbd28730cb32267ec5a998aeb70730ef65a9ae21ab2d471fc7aac1f5a882)
+
+SHA-256:
+`02D4CBD28730CB32267EC5A998AEB70730EF65A9AE21AB2D471FC7AAC1F5A882`
+
+This utility is unsigned and modifies a supported Bongo Cat game DLL, which may
+trigger heuristic antivirus detections. This does not mean detections should be
+automatically treated as false positives. The complete source code and build
+instructions are public, release checksums are provided, and users are welcome
+to inspect or build the program themselves.
+
 For the precise component and patch boundaries, read
 [Architecture](docs/ARCHITECTURE.md).
 
