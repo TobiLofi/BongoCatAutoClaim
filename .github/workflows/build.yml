@@ -11,7 +11,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.423
+          dotnet-version: '8.0.425'
+      - name: Verify pinned SDK
+        shell: pwsh
+        run: |
+          $actual = dotnet --version
+          if ($actual -ne '8.0.425') {
+            throw "Expected .NET SDK 8.0.425, but resolved $actual."
+          }
       - name: Restore
         run: dotnet restore BongoCatAutoClaim.sln --locked-mode
       - name: Build

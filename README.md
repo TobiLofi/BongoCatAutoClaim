@@ -97,10 +97,11 @@ For the precise component and patch boundaries, read
 Requirements:
 
 - Windows 10 or later, x64
-- [.NET SDK 8.0.423](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET SDK 8.0.425](https://dotnet.microsoft.com/download/dotnet/8.0)
 - Git
 
-The repository pins SDK `8.0.423` in `global.json` and Mono.Cecil `0.11.4` in
+The repository pins SDK `8.0.425` with roll-forward disabled in `global.json`
+and Mono.Cecil `0.11.4` in
 the project file. From the repository root:
 
 ```powershell
