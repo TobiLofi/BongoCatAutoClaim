@@ -1,6 +1,16 @@
 # Changelog
 
-## 1.0.0 - Unreleased
+## 1.0.1 - 2026-10-03
+
+- Added validated support for Bongo Cat Steam build 25659569 while retaining
+  support for build 25562987.
+- Preserved the normal 30-minute cooldown, manual click/tap behavior, and Steam
+  inventory logic.
+- Kept strict build, hash, module-identity, and IL-layout compatibility gating.
+- Completed runtime acceptance on build 25659569, including already-ready
+  rewards and a later natural timer completion.
+
+## 1.0.0 - 2026-09-29
 
 - Initial portable Windows GUI.
 - Detects supported Steam installations or accepts a selected game folder.

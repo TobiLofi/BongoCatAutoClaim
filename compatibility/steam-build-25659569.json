@@ -1,0 +1,11 @@
+{
+  "steamAppId": "3419430",
+  "steamBuildId": "25659569",
+  "displayName": "Steam build 25659569",
+  "originalSha256": "8E8521BBFBB41666932CA2C4AB2487BF1715B17BEF5A423B6A9CB557AB7613BB",
+  "acceptedPatchedSha256": "BA1CBF599840DA9EDE68F852A399F0F30C9BF9B7D252EA171FCA2C4D53F785B2",
+  "moduleMvid": "d2f9f1f2-9930-4613-b9d0-69489b890fb3",
+  "patchDefinition": "shop-timer-ready-buy-v1",
+  "stockRefreshSeconds": 1800,
+  "runtimeAcceptance": "Already-ready rewards and a later natural timer completion auto-claimed successfully on 2026-10-03."
+}

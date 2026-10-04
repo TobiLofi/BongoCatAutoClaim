@@ -1,13 +1,16 @@
 using BongoCatAutoClaim.Core;
 
 var catalog = CompatibilityCatalog.LoadEmbedded();
-Assert(catalog.Definitions.Count == 1, "Exactly one compatibility definition should ship in v1.0.0.");
-var definition = catalog.Definitions.Single();
-Assert(definition.SteamAppId == "3419430", "Steam app ID mismatch.");
-Assert(definition.SteamBuildId == "25562987", "Steam build mismatch.");
-Assert(definition.StockRefreshSeconds == 1800, "The normal 30-minute cooldown must remain unchanged.");
-Assert(catalog.FindByHash(definition.OriginalSha256) == definition, "Original hash lookup failed.");
-Assert(catalog.FindByHash(definition.AcceptedPatchedSha256) == definition, "Patched hash lookup failed.");
+Assert(catalog.Definitions.Count == 2, "Exactly two audited compatibility definitions should be present.");
+Assert(catalog.Definitions.Select(definition => definition.SteamBuildId).OrderBy(id => id).SequenceEqual(new[] { "25562987", "25659569" }),
+    "Supported Steam build IDs mismatch.");
+foreach (var definition in catalog.Definitions)
+{
+    Assert(definition.SteamAppId == "3419430", "Steam app ID mismatch.");
+    Assert(definition.StockRefreshSeconds == 1800, "The normal 30-minute cooldown must remain unchanged.");
+    Assert(catalog.FindByHash(definition.OriginalSha256) == definition, "Original hash lookup failed.");
+    Assert(catalog.FindByHash(definition.AcceptedPatchedSha256) == definition, "Patched hash lookup failed.");
+}
 Assert(catalog.FindByHash(new string('0', 64)) is null, "Unknown hashes must be rejected.");
 
 var assemblyOption = Array.FindIndex(args, item => item.Equals("--assembly", StringComparison.OrdinalIgnoreCase));
@@ -17,6 +20,8 @@ if (assemblyOption >= 0)
         throw new ArgumentException("--assembly requires a path to a locally owned pristine Assembly-CSharp.dll.");
     var source = Path.GetFullPath(args[assemblyOption + 1]);
     Assert(File.Exists(source), "Local validation assembly does not exist.");
+    var definition = catalog.FindByHash(FileHash.Sha256(source))
+        ?? throw new InvalidOperationException("Local validation assembly is not a supported pristine original.");
     Assert(FileHash.Sha256(source) == definition.OriginalSha256, "Local validation assembly is not the supported pristine original.");
 
     var temporaryDirectory = Path.Combine(Path.GetTempPath(), $"BongoCatAutoClaim.Tests.{Guid.NewGuid():N}");

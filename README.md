@@ -30,17 +30,17 @@ the emote/secondary chest are handled on supported game builds.
 | Platform | Steam build | Original `Assembly-CSharp.dll` SHA-256 | Accepted patched SHA-256 |
 | --- | --- | --- | --- |
 | Windows / Steam | `25562987` | `BA56E528A5B4B5AF997960E623A90ED0A2A9201ECADE50FA5B6B8B352FDCD953` | `3670F83F99C7E5CFB8906EFD6C3EB8E615D530609C96694CFAE29ACF0DF7CBA2` |
+| Windows / Steam | `25659569` | `8E8521BBFBB41666932CA2C4AB2487BF1715B17BEF5A423B6A9CB557AB7613BB` | `BA1CBF599840DA9EDE68F852A399F0F30C9BF9B7D252EA171FCA2C4D53F785B2` |
 
-Support for this build was accepted after three natural dual-chest claim
-cycles. Unknown or updated builds are deliberately refused until they have
-been manually audited and runtime tested.
+Build 25562987 was accepted after three natural dual-chest claim cycles. Build
+25659569 was accepted after already-ready rewards and a later natural timer
+completion auto-claimed successfully. Unknown or updated builds are deliberately
+refused until they have been manually audited and runtime tested.
 
 ## Installation
 
-No public binary release is attached yet. Once v1.0.0 release validation is
-complete:
-
-1. Download the portable executable from this repository's Releases page.
+1. Download the latest portable executable from this repository's Releases
+   page.
 2. Place it in a writable folder of your choice; it does not need to be inside
    the Bongo Cat installation.
 3. Close Bongo Cat normally.

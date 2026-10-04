@@ -19,7 +19,7 @@ public sealed class MainForm : Form
     {
         this.detector = detector;
         this.manager = manager;
-        Text = "Bongo Cat Auto Claim v1.0.0";
+        Text = "Bongo Cat Auto Claim v1.0.1";
         StartPosition = FormStartPosition.CenterScreen;
         MinimumSize = new Size(700, 390);
         ClientSize = new Size(760, 430);
