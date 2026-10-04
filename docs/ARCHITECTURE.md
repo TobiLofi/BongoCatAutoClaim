@@ -9,7 +9,8 @@ patching and compatibility data.
   and hash status and exposes only **Install Auto Claim** and **Restore
   Original** mutations.
 - `BongoCatAutoClaim.Core` owns Steam discovery, SHA-256 validation, backups,
-  restoration, diagnostics, and the IL patch engine.
+  restoration, diagnostics, the IL patch engine, and the isolated release-check
+  service.
 - `compatibility/*.json` contains the allowlist of manually audited Steam
   builds. These files are embedded in the compiled application.
 - `BongoCatAutoClaim.Tests` validates the catalog without proprietary files.
@@ -18,7 +19,13 @@ patching and compatibility data.
 
 ## Safety boundaries
 
-The application has no network or telemetry code. It never downloads DLLs.
+The application has no telemetry and never downloads DLLs. The only network
+path is an HTTPS `GET` to the official GitHub releases API after the user
+presses **Check for Updates**. There is no startup or background check. The
+service ignores draft and prerelease entries, uses semantic version comparison,
+and constructs the matching official GitHub release URL locally rather than
+trusting a URL from remote JSON.
+
 It refuses to patch unless the Steam build (when available), original SHA-256,
 module MVID, member signatures, and exact IL anchor all match an allowlisted
 definition. Patched output is reopened to validate branch targets and must

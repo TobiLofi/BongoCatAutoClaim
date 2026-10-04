@@ -4,6 +4,11 @@ namespace BongoCatAutoClaim.App;
 
 internal static class Program
 {
+    private static readonly HttpClient UpdateHttpClient = new()
+    {
+        Timeout = TimeSpan.FromSeconds(15)
+    };
+
     [STAThread]
     private static void Main()
     {
@@ -12,7 +17,8 @@ internal static class Program
         {
             var catalog = CompatibilityCatalog.LoadEmbedded();
             var storage = new AppStorage();
-            Application.Run(new MainForm(new GameDetector(), new AutoClaimManager(catalog, storage)));
+            var updateChecker = new UpdateChecker(new GitHubReleaseFeedClient(UpdateHttpClient));
+            Application.Run(new MainForm(new GameDetector(), new AutoClaimManager(catalog, storage), updateChecker));
         }
         catch (Exception exception)
         {

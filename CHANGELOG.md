@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 - 2026-10-04
+
+- Added a manual **Check for Updates** button using the official GitHub release
+  API and semantic version comparison.
+- Added clear current, update-available, and offline/error messages.
+- Opens only the official release page after user confirmation; no automatic
+  download or self-update is performed.
+- Added no telemetry or background network activity.
+- Made no compatibility, timer, or Auto Claim patch behavior changes.
+
 ## 1.0.1 - 2026-10-03
 
 - Added validated support for Bongo Cat Steam build 25659569 while retaining

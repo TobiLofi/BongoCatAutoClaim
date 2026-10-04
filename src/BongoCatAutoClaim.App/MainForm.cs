@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using BongoCatAutoClaim.Core;
 
 namespace BongoCatAutoClaim.App;
@@ -6,6 +7,7 @@ public sealed class MainForm : Form
 {
     private readonly GameDetector detector;
     private readonly AutoClaimManager manager;
+    private readonly UpdateChecker updateChecker;
     private readonly TextBox pathBox = new() { Dock = DockStyle.Fill, ReadOnly = true };
     private readonly Label statusLabel = new() { AutoSize = true, MaximumSize = new Size(620, 0) };
     private readonly Label detailLabel = new() { AutoSize = true, MaximumSize = new Size(620, 0) };
@@ -13,13 +15,15 @@ public sealed class MainForm : Form
     private readonly Button restoreButton = new() { Text = "Restore Original", AutoSize = true };
     private readonly Button refreshButton = new() { Text = "Detect / Refresh", AutoSize = true };
     private readonly Button browseButton = new() { Text = "Choose Folder...", AutoSize = true };
+    private readonly Button updateButton = new() { Text = "Check for Updates", AutoSize = true };
     private GameInstallation? installation;
 
-    public MainForm(GameDetector detector, AutoClaimManager manager)
+    public MainForm(GameDetector detector, AutoClaimManager manager, UpdateChecker updateChecker)
     {
         this.detector = detector;
         this.manager = manager;
-        Text = "Bongo Cat Auto Claim v1.0.1";
+        this.updateChecker = updateChecker;
+        Text = $"Bongo Cat Auto Claim {UtilityVersion.Display}";
         StartPosition = FormStartPosition.CenterScreen;
         MinimumSize = new Size(700, 390);
         ClientSize = new Size(760, 430);
@@ -37,6 +41,12 @@ public sealed class MainForm : Form
             AutoSize = true,
             MaximumSize = new Size(680, 0)
         };
+        var versionLabel = new Label
+        {
+            Text = $"Utility version: {UtilityVersion.Display}",
+            AutoSize = true,
+            ForeColor = Color.DimGray
+        };
 
         var pathRow = new TableLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, ColumnCount = 2 };
         pathRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -48,6 +58,7 @@ public sealed class MainForm : Form
         buttons.Controls.Add(refreshButton);
         buttons.Controls.Add(installButton);
         buttons.Controls.Add(restoreButton);
+        buttons.Controls.Add(updateButton);
 
         var notice = new Label
         {
@@ -62,11 +73,12 @@ public sealed class MainForm : Form
             Dock = DockStyle.Fill,
             Padding = new Padding(28),
             AutoSize = true,
-            RowCount = 8,
+            RowCount = 9,
             ColumnCount = 1
         };
-        for (var i = 0; i < 8; i++) layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        for (var i = 0; i < 9; i++) layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         layout.Controls.Add(title);
+        layout.Controls.Add(versionLabel);
         layout.Controls.Add(explanation);
         layout.Controls.Add(new Label { Text = "Bongo Cat installation", AutoSize = true, Padding = new Padding(0, 15, 0, 0) });
         layout.Controls.Add(pathRow);
@@ -80,6 +92,7 @@ public sealed class MainForm : Form
         browseButton.Click += (_, _) => Browse();
         installButton.Click += async (_, _) => await RunOperationAsync("Install Auto Claim", () => manager.Install(RequireInstallation()));
         restoreButton.Click += async (_, _) => await RunOperationAsync("Restore Original", () => manager.Restore(RequireInstallation()));
+        updateButton.Click += async (_, _) => await CheckForUpdatesAsync();
         Shown += (_, _) => DetectAndRefresh();
     }
 
@@ -158,14 +171,104 @@ public sealed class MainForm : Form
         }
     }
 
+    private async Task CheckForUpdatesAsync()
+    {
+        SetBusy(true);
+        try
+        {
+            var result = await updateChecker.CheckAsync(UtilityVersion.Current);
+            if (result.State == UpdateCheckState.NoStableRelease)
+            {
+                ShowUpdateFailure();
+                return;
+            }
+
+            if (result.State == UpdateCheckState.UpToDate)
+            {
+                MessageBox.Show(this,
+                    $"You're up to date.{Environment.NewLine}Bongo Cat Auto Claim {UtilityVersion.Display} is the latest version.",
+                    "Check for Updates", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var latest = result.LatestVersion ?? throw new InvalidDataException("The latest version is missing.");
+            var releasePage = result.ReleasePage ?? throw new InvalidDataException("The release page is missing.");
+            using var dialog = new UpdateAvailableDialog(UtilityVersion.Current, latest);
+            if (dialog.ShowDialog(this) != DialogResult.OK) return;
+            if (!OfficialReleasePage.IsOfficial(releasePage))
+                throw new InvalidDataException("The release page is not an official project URL.");
+
+            Process.Start(new ProcessStartInfo(releasePage.AbsoluteUri) { UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            ShowUpdateFailure();
+        }
+        finally
+        {
+            SetBusy(false);
+            RefreshStatus();
+        }
+    }
+
+    private void ShowUpdateFailure() => MessageBox.Show(this,
+        "Unable to check for updates right now. Please try again later.",
+        "Check for Updates", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
     private GameInstallation RequireInstallation() => installation ?? throw new InvalidOperationException("No Bongo Cat installation is selected.");
 
     private void SetBusy(bool busy)
     {
         UseWaitCursor = busy;
-        refreshButton.Enabled = browseButton.Enabled = installButton.Enabled = restoreButton.Enabled = !busy;
+        refreshButton.Enabled = browseButton.Enabled = installButton.Enabled = restoreButton.Enabled = updateButton.Enabled = !busy;
     }
 
     private void ShowError(Exception exception) => MessageBox.Show(this, exception.Message, "Bongo Cat Auto Claim",
         MessageBoxButtons.OK, MessageBoxIcon.Error);
+}
+
+internal sealed class UpdateAvailableDialog : Form
+{
+    public UpdateAvailableDialog(SemanticVersion current, SemanticVersion latest)
+    {
+        Text = "Update Available";
+        StartPosition = FormStartPosition.CenterParent;
+        FormBorderStyle = FormBorderStyle.FixedDialog;
+        MinimizeBox = false;
+        MaximizeBox = false;
+        ShowInTaskbar = false;
+        ClientSize = new Size(430, 155);
+        Font = new Font("Segoe UI", 10F);
+
+        var message = new Label
+        {
+            Text = $"Bongo Cat Auto Claim v{latest} is available.{Environment.NewLine}You currently have v{current}.",
+            AutoSize = true,
+            Location = new Point(24, 24)
+        };
+        var openButton = new Button
+        {
+            Text = "Open Download Page",
+            AutoSize = true,
+            DialogResult = DialogResult.OK
+        };
+        var cancelButton = new Button
+        {
+            Text = "Not Now",
+            AutoSize = true,
+            DialogResult = DialogResult.Cancel
+        };
+        var buttons = new FlowLayoutPanel
+        {
+            AutoSize = true,
+            FlowDirection = FlowDirection.LeftToRight,
+            Location = new Point(24, 95)
+        };
+        buttons.Controls.Add(openButton);
+        buttons.Controls.Add(cancelButton);
+        Controls.Add(message);
+        Controls.Add(buttons);
+        AcceptButton = openButton;
+        CancelButton = cancelButton;
+    }
 }

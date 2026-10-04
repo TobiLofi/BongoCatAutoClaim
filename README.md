@@ -23,7 +23,8 @@ the emote/secondary chest are handled on supported game builds.
 - Rejects unknown DLL hashes, module identities, and IL layouts.
 - Verifies the exact accepted patched hash before installation.
 - Self-contained, portable Windows GUI with no console window.
-- No telemetry, analytics, network access, or downloaded replacement DLLs.
+- Manual **Check for Updates** against the official GitHub repository.
+- No telemetry, analytics, background checks, or downloaded replacement DLLs.
 
 ## Supported versions
 
@@ -72,6 +73,20 @@ Run the utility after an update. If the build or hash is unknown, it will refuse
 to modify the file. A maintainer must audit and validate that exact build before
 support can be added. See [Adding a supported build](docs/ADDING-A-SUPPORTED-BUILD.md).
 
+## Check for Updates
+
+**Check for Updates** runs only when the user presses that button. It makes one
+HTTPS `GET` request to the official GitHub release API for
+`TobiLofi/BongoCatAutoClaim`, ignores draft and prerelease entries, and compares
+the latest stable release using semantic version ordering.
+
+If a newer utility is available, the app can open that version's official
+GitHub release page in the default browser. It does not download or execute a
+file and does not update itself. There are no startup or background checks, no
+telemetry or analytics, and no device or user identifiers are sent. Failure to
+reach GitHub does not affect detection, installation, restoration, or game-build
+compatibility checks.
+
 ## Safety / transparency
 
 - The complete application source is published in this repository.
@@ -80,7 +95,8 @@ support can be added. See [Adding a supported build](docs/ADDING-A-SUPPORTED-BUI
 - Only allowlisted originals are patched; unknown hashes and structures fail
   closed.
 - A pristine, hash-verified backup is created before installation.
-- The program requests no administrator elevation and contains no network code.
+- The program requests no administrator elevation. Its only network operation
+  is the explicit, user-triggered GitHub release check described above.
 - Diagnostics are stored locally beside the app and avoid recording unnecessary
   personal information.
 
