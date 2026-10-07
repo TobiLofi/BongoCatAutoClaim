@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 - 2026-10-07
+
+- Added support for Bongo Cat Steam build 25723683 while retaining support for
+  builds 25562987 and 25659569.
+- Made no Auto Claim behavior change; normal and emote timers remain independent.
+- Preserved the normal cooldown and strict unknown-build compatibility gating.
+
 ## 1.1.0 - 2026-10-04
 
 - Added a manual **Check for Updates** button using the official GitHub release

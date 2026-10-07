@@ -1,8 +1,8 @@
 using BongoCatAutoClaim.Core;
 
 var catalog = CompatibilityCatalog.LoadEmbedded();
-Assert(catalog.Definitions.Count == 2, "Exactly two audited compatibility definitions should be present.");
-Assert(catalog.Definitions.Select(definition => definition.SteamBuildId).OrderBy(id => id).SequenceEqual(new[] { "25562987", "25659569" }),
+Assert(catalog.Definitions.Count == 3, "Exactly three audited compatibility definitions should be present.");
+Assert(catalog.Definitions.Select(definition => definition.SteamBuildId).OrderBy(id => id).SequenceEqual(new[] { "25562987", "25659569", "25723683" }),
     "Supported Steam build IDs mismatch.");
 foreach (var definition in catalog.Definitions)
 {
@@ -98,9 +98,9 @@ static void Assert(bool condition, string message)
 
 static async Task VerifyUpdateChecksAsync()
 {
-    var current = SemanticVersion.Parse("v1.1.0");
+    var current = SemanticVersion.Parse("v1.1.1");
 
-    var same = await Check("""[{"tag_name":"v1.1.0","draft":false,"prerelease":false}]""", current);
+    var same = await Check("""[{"tag_name":"v1.1.1","draft":false,"prerelease":false}]""", current);
     Assert(same.State == UpdateCheckState.UpToDate, "The current release should be reported as up to date.");
 
     var newer = await Check("""[{"tag_name":"v1.2.0","draft":false,"prerelease":false}]""", current);
@@ -127,7 +127,7 @@ static async Task VerifyUpdateChecksAsync()
         [
           {"tag_name":"v9.0.0","draft":true,"prerelease":false},
           {"tag_name":"v8.0.0","draft":false,"prerelease":true},
-          {"tag_name":"v1.1.0","draft":false,"prerelease":false}
+          {"tag_name":"v1.1.1","draft":false,"prerelease":false}
         ]
         """, current);
     Assert(filtered.State == UpdateCheckState.UpToDate,

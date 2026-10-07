@@ -1,0 +1,11 @@
+{
+  "steamAppId": "3419430",
+  "steamBuildId": "25723683",
+  "displayName": "Steam build 25723683",
+  "originalSha256": "7566E8D9846CDB38EADCDB729CFCF676DC338CD738E99F664DC6EF3B79E87B83",
+  "acceptedPatchedSha256": "0E0CDB2EE64E22E72FE15DCE3B151CFD50E2CFE6C5E87A2D29B766A09DDED4D1",
+  "moduleMvid": "b4a4cbe8-5686-47ae-819a-4db1db79ffde",
+  "patchDefinition": "shop-timer-ready-buy-v1",
+  "stockRefreshSeconds": 1800,
+  "runtimeAcceptance": "A naturally ready chest auto-claimed successfully, delivered its reward, and resumed the normal countdown on 2026-10-07."
+}
